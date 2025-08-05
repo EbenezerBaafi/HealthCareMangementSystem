@@ -29,13 +29,22 @@ namespace HealthcareManagementSystem
 
         public void AddPrescription(Prescription prescription)
         {
-            if (patientPrescription.ContainsKey(prescription.PatientId))
+            // Fix for CS1503: Convert prescription.PatientId from string to int
+            if (int.TryParse(prescription.PatientId, out int patientId))
             {
-                patientPrescription[prescription.PatientId].Add(prescription);
+                if (patientPrescription.ContainsKey(patientId))
+                {
+                    patientPrescription[patientId].Add(prescription);
+                }
+                else
+                {
+                    // Fix for IDE0028: Simplify collection initialization
+                    patientPrescription[patientId] = new List<Prescription> { prescription };
+                }
             }
             else
             {
-                patientPrescription[prescription.PatientId] = new List<Prescription>() { prescription };
+                throw new ArgumentException("Invalid PatientId. It must be convertible to an integer.");
             }
         }
     }
