@@ -97,5 +97,10 @@ namespace HealthcareManagementSystem
                 Console.WriteLine($"No prescriptions found for Patient ID {patientId}.");
             }
         }
+
+        public void PrintPrescriptionsForPatient(int patientId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
